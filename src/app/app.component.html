@@ -1,0 +1,54 @@
+<main class="pt-5 pb-5">
+  <section class="shadow mx-auto col-5">
+    <div class="mx-auto col-5">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Search with title" [(ngModel)]="searchedTitle">
+      </mat-form-field>
+    </div>
+  </section>
+</main>
+
+<section class="col-10 mx-auto">
+  <table mat-table [dataSource]="tableData | searchTitle:searchedTitle" class="mat-elevation-z8 table">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>
+        <h5>TITLE</h5>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+    <ng-container matColumnDef="url">
+      <th mat-header-cell *matHeaderCellDef>
+        <h5>URL</h5>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.url}} </td>
+    </ng-container>
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef>
+        <h5>CREATED AT</h5>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+    </ng-container>
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef>
+        <h5>AUTHOR</h5>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnHeadings;"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnHeadings; " (click)="openModal(rawData,row)"></tr>
+  </table>
+</section>
+
+<ng-template #rawData>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Raw Json Data</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <pre>{{rawJsonData|json}}</pre>
+    </div>
+  </div>
+</ng-template>
